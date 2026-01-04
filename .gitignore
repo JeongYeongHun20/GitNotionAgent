@@ -1,0 +1,35 @@
+### 보안 및 비밀 정보 ###
+# 우리가 만든 시크릿 설정 파일 (반드시 포함!)
+src/main/resources/application-secret.yml
+.env
+*.token
+*.key
+
+### Java & Spring Boot ###
+*.class
+*.log
+*.ctxt
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### 빌드 도구 (Gradle) ###
+.gradle/
+build/
+
+### IDE 관련 (IntelliJ, VS Code) ###
+.idea/
+*.iml
+out/
+gen/
+.vscode/
+.settings/
+.project/
+.classpath/
+
+### OS 관련 ###
+.DS_Store
+Thumbs.db
