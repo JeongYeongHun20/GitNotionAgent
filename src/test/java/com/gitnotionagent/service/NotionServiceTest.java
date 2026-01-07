@@ -1,5 +1,6 @@
 package com.gitnotionagent.service;
 
+import com.gitnotionagent.dto.CommitAnalysis;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,16 @@ class NotionServiceTest {
 
 
     @Test
+    @DisplayName("실제 노션 서버 DB(표)에 페이지 생성되는지 확인한다")
     void createCommitLogPage() {
+        String url = notionService.createCommitLogPage(CommitAnalysis.builder().
+                summary("good summar").
+                category("✨ Feature").
+                commitDate("2026-01-06").
+                commitUrl("1234").
+                aiImpactAnalysis("good").fileList("1234")
+                .build());
+        System.out.println(url);
     }
 
     @Test

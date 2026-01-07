@@ -30,11 +30,14 @@ public class NotionService {
     @Value("${notion.pageId}")
     private String pageId;
 
+    @Value("${notion.dbId}")
+    private String dbId;
+
 
 
 
     //초기 생성된 DB(표)에 실제 값들을 입력해주는 함수
-    public String createCommitLogPage(CommitAnalysis analysis, String dbId) {
+    public String createCommitLogPage(CommitAnalysis analysis) {
         Map<String, PageProperty> properties = Map.of(
                 "Name", NotionUtil.createTitle(analysis.getSummary()),
                 "Category", NotionUtil.createSelect(analysis.getCategory()),
@@ -52,7 +55,7 @@ public class NotionService {
         );
 
         Page response = client.createPage(new CreatePageRequest(
-                new PageParent(PageParentType.PageId,dbId),
+                new PageParent(PageParentType.DatabaseId,dbId),
                 properties,
                 contents
         ));
