@@ -1,6 +1,8 @@
 ### 보안 및 비밀 정보 ###
 # 우리가 만든 시크릿 설정 파일 (반드시 포함!)
 src/main/resources/application-secret.yml
+src/test/resources/application-secret.yml
+
 .env
 *.token
 *.key
