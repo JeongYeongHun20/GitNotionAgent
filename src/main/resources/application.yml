@@ -3,3 +3,12 @@ spring:
     name: GitNotionAgent
   profiles:
     include: secret
+  ai:
+    mcp:
+      server:
+        protocol: streamable
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
