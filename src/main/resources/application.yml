@@ -1,8 +1,6 @@
 spring:
   application:
     name: GitNotionAgent
-  profiles:
-    include: secret
   ai:
     mcp:
       server:

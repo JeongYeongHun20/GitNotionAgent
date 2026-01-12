@@ -49,6 +49,7 @@ public class GithubService {
     }
 
     public String getCommitFiles(String repo, String sha) throws IOException {
+        int limit = 10000;
         GHRepository repository = getGHRepository(repo);
         GHCommit commit = repository.getCommit(sha);
         List<String> filePaths = new java.util.ArrayList<>();
@@ -67,8 +68,15 @@ public class GithubService {
                 sb.append("  Patch: ").append(file.getPatch()).append("\n");
             }
         }
-        sb.append("파일 경로 목록:\n");
-        filePaths.forEach((p->sb.append("-").append(p).append("\n")));
+
+        if (sb.length() > limit) {
+            StringBuilder sb2=new StringBuilder();
+            sb2.append("파일 경로 목록:\n");
+            filePaths.forEach((p->sb2.append("-").append(p).append("\n")));
+            sb2.append("커밋 내역의 크기가 너무 커서 파일 경로 목록에서 개별 파일을 선택해주세요");
+            return sb2.toString();
+        }
+
 
         return sb.toString();
     }
