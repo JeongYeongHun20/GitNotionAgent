@@ -20,16 +20,15 @@ public class GithubTools {
             description = """
                    지정한 레포지토리의 최근 커밋 목록을 보여줍니다.\s
                    이 도구를 호출한 후에는 반드시 다음 단계를 수행하세요:
-                   1. 반환된 커밋 리스트를 사용자에게 보여준다.
-                   2. 특정 커밋을 상세 분석하고 싶다면 리스트의 'SHA' 값을 알려달라고 사용자에게 친절하게 제안한다.
+                   1. 반환된 커밋 메시지 리스트를 SHA값을 제외하고 사용자에게 보여준다.
+                   2. 특정 커밋을 상세 분석하고 싶다면 리스트 번호를 알려달라고 사용자에게 친절하게 제안한다.
                    \s""")
     public String getMyCommits(
-            @McpToolParam(description = "GitHub 사용자명 (예: YeongHun)") String owner,
             @McpToolParam(description = "레포지토리 이름 (예: GitNotionAgent)") String repo) {
         try {
-            return githubService.getRecentCommits(owner, repo);
+            return githubService.getRecentCommits(repo);
         }catch (IOException e) {
-            return "화살표 뒤의 에러코드와 메시지를보고 분석하여 사용자에게 전달해 ->" + e.getMessage();
+            return e.getMessage();
         }
 
 
@@ -43,30 +42,54 @@ public class GithubTools {
                    2. 사용자의 의도를 물어봅니다.
                    \s""")
     public String analyzeCommit(
-            @McpToolParam(description = "GitHub 사용자명 (예: YeongHun)") String owner,
             @McpToolParam(description = "레포지토리 이름 (예: GitNotionAgent)") String repo,
-            @McpToolParam(description = "SHA 값(예: 5s4fe21fw5e6q)") String SHA
+            @McpToolParam(description = "SHA 값(예: 5s4fe21fw5e6q)") String sha
     ){
         try{
-            return githubService.getCommitDiffSummary(owner, repo, SHA);
+            return githubService.getCommitFiles(repo, sha);
         }catch (IOException e){
-            return "IOException"+e.getMessage();
+            return e.getMessage();
         }
 
     }
     @McpTool(
             name = "get_commit_code",
-            description = "지정한 커밋의 상세 코드를 그대로 보여줍니다" +
-                    "1. 바뀌귀전 코드를 먼저 보여주세요" +
-                    "2. 바뀐후의 코드를 보여주세요"
-    )
+            description ="""
+                    지정한 커밋 파일의 코드를 보여줍니다\s
+                    아래 지정한 양식을 무조건 따라서 보여줘
+                    1. 변경한 파일명을 보여줘
+                    2. 바뀌귀전 코드를 보여줘
+                    3. 바뀐후의 코드를 보여줘
+                    \s""")
     public String getCommit(
-            @McpToolParam(description = "GitHub 사용자명 (예: YeongHun)") String owner,
             @McpToolParam(description = "레포지토리 이름 (예: GitNotionAgent)") String repo,
-            @McpToolParam(description = "SHA 값(예: 5s4fe21fw5e6q)") String SHA
+            @McpToolParam(description = "SHA 값(예: 5s4fe21fw5e6q)") String sha
     ){
-        
-        return "";
+        try{
+            return githubService.getCommitFiles(repo,sha);
+        }catch (IOException e){
+            return e.getMessage();
+        }
+    }
+    @McpTool(
+            name = "get_commit_file",
+            description = """
+                    지정한 커밋 파일의 코드를 보여줍니다\s
+                    아래 지정한 양식을 무조건 따라서 보여줘
+                    1. 변경한 파일명을 보여줘
+                    2. 바뀌귀전 코드를 보여줘
+                    3. 바뀐후의 코드를 보여줘
+                    \s""")
+    public String getCommitFile(
+            @McpToolParam(description = "레포지토리 이름 (예: GitNotionAgent)") String repo,
+            @McpToolParam(description = "SHA 값(예: 5s4fe21fw5e6q)") String sha,
+            @McpToolParam(description = "파일 경로값(예: src/main/resources/static")String path){
+
+        try{
+            return githubService.getCommitFile(repo, sha, path);
+        }catch (IOException e){
+            return e.getMessage();
+        }
     }
 
 }

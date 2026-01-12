@@ -18,11 +18,22 @@ class GithubServiceTest {
     @Test
     void getRecentCommits() {
         try{
-            String recentCommits = githubService.getRecentCommits("JeongYeongHun20", "WebSocketChat2");
+            String recentCommits = githubService.getRecentCommits( "WebSocketChat");
             System.out.println(recentCommits);
         }catch (IOException e){
             log.error("e: ", e);
         }
 
     }
+
+    @Test
+    void getCommitFiles(){
+        try{
+            String commitDiff = githubService.getCommitFiles( "WebSocketChat","b6a53ffc9969aa7b3527aa64a241d13eebfc93ef");
+            System.out.println(commitDiff);
+        } catch (IOException e) {
+            log.error("e: "+e);
+        }
+    }
+
 }

@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class GithubTokenProvider {
-    private final HttpServletRequest request; // 현재 HTTP 요청 정보를 가져옴
-
-    @Value("${github.token}")
-    private String token;
+    private final HttpServletRequest request;
+//
+//    @Value("${github.token}")
+//    private String token;
 
     private String getGitHubTokenFromHeader(String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7); // "Bearer " 이후의 토큰값만 추출
+            return authHeader.substring(7);
         }
         return null;
     }
@@ -23,11 +23,11 @@ public class GithubTokenProvider {
     public String getToken(){
         String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return token;
-        }else {
+//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            return token;
+//        }else {
             return getGitHubTokenFromHeader(authHeader);
-        }
+//        }
     }
 
 
